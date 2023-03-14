@@ -1,7 +1,12 @@
+async function getJSON(url, options) {
+  const res = await fetch(url, options);
+  const json = await res.json();
+  if (!res.ok) throw new Error(json.message);
+  return json;
+}
+
 async function getUserData(username) {
-  const res = await fetch(`https://api.github.com/users/${username}`);
-  const data = await res.json();
-  return data;
+  return await getJSON(`https://api.github.com/users/${username}`);
 }
 
 async function getWithPagination(total_number, per_page, func) {
@@ -16,22 +21,26 @@ async function getWithPagination(total_number, per_page, func) {
 
 function getFollowers(username, total) {
   const per_page = 100;
-  return getWithPagination(total, per_page, async (page) => {
-    const res = await fetch(
-      `https://api.github.com/users/${username}/followers?page=${page}&per_page=${per_page}`
-    );
-    return await res.json();
-  });
+  return getWithPagination(
+    total,
+    per_page,
+    async (page) =>
+      await getJSON(
+        `https://api.github.com/users/${username}/followers?page=${page}&per_page=${per_page}`
+      )
+  );
 }
 
 function getFollowing(username, total) {
   const per_page = 100;
-  return getWithPagination(total, per_page, async (page) => {
-    const res = await fetch(
-      `https://api.github.com/users/${username}/following?page=${page}&per_page=${per_page}`
-    );
-    return await res.json();
-  });
+  return getWithPagination(
+    total,
+    per_page,
+    async (page) =>
+      await getJSON(
+        `https://api.github.com/users/${username}/following?page=${page}&per_page=${per_page}`
+      )
+  );
 }
 
 async function findNonFollowers(username) {
@@ -70,11 +79,16 @@ $(".ui.form").submit(async function (e) {
   $("#list-of-non-followers").html("");
   $(".ui.form").addClass("loading");
   const username = $("#username").val();
-  const nonFollowers = await findNonFollowers(username);
-  if (nonFollowers.length)
-    $("#list-of-non-followers").html(
-      nonFollowers.map((user) => renderUser(user.login))
-    );
-  $(".ui.statistic .value").text(nonFollowers.length);
-  $(".ui.form").removeClass("loading");
+  try {
+    const nonFollowers = await findNonFollowers(username);
+    $(".ui.statistic .value").text(nonFollowers.length);
+    if (nonFollowers.length)
+      $("#list-of-non-followers").html(
+        nonFollowers.map((user) => renderUser(user.login))
+      );
+  } catch (err) {
+    alert(err.message);
+  } finally {
+    $(".ui.form").removeClass("loading");
+  }
 });

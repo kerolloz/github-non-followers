@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>GitHub Non-Followers</title>
+
+    <!-- You MUST include jQuery before Fomantic -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.7.7/dist/semantic.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.7.7/dist/semantic.min.js"></script>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .main-wrapper {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .middle-content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .ui.vertical.stripe {
+        padding: 5em 0em;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="main-wrapper">
+      <div
+        class="ui inverted vertical masthead center aligned segment vertical stripe"
+      >
+        <div class="ui text container">
+          <h1 class="ui inverted blue header">GitHub Non-Followers</h1>
+          <h3>
+            A simple and easy-to-use tool that allows you to quickly find a list
+            of GitHub users who are not following you back.
+          </h3>
+        </div>
+      </div>
+      <div
+        class="ui middle aligned centered grid vertical stripe middle-content"
+      >
+        <div class="row">
+          <div class="ui container">
+            <form class="ui form huge">
+              <div class="inline field">
+                <div class="ui labeled input">
+                  <label class="ui label">github.com/</label>
+                  <input
+                    type="text"
+                    placeholder="your username"
+                    id="username"
+                    required
+                  />
+                </div>
+              </div>
+              <button class="ui teal labeled icon button" type="submit">
+                <i class="group icon"></i>
+                Get Non-followers
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="ui container">
+            <div class="ui statistic">
+              <div class="value">0</div>
+              <div class="label">Non-followers Found</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="ui container">
+            <div
+              class="ui large horizontal divided list"
+              id="list-of-non-followers"
+            ></div>
+          </div>
+        </div>
+      </div>
+      <div class="ui inverted vertical segment">
+        <div class="ui equal width height center aligned padded grid">
+          <div class="row">
+            <div class="column">
+              <div class="ui inverted">
+                An OpenSource Project By <b>Kerollos Magdy</b>.
+              </div>
+              <div class="ui divider"></div>
+              <div class="ui inverted link list">
+                <a
+                  class="github-button item"
+                  href="https://github.com/kerolloz/github-non-followers"
+                  data-icon="octicon-star"
+                  data-show-count="true"
+                  aria-label="Star kerolloz/github-non-followers on GitHub"
+                  >Star</a
+                >
+                <br />
+
+                <a
+                  class="github-button item"
+                  href="https://github.com/kerolloz/github-non-followers/issues"
+                  data-icon="octicon-issue-opened"
+                  data-show-count="true"
+                  aria-label="Issue kerolloz/github-non-followers on GitHub"
+                  >Issue</a
+                >
+                <br />
+
+                <a
+                  class="github-button item"
+                  href="https://github.com/kerolloz"
+                  data-show-count="true"
+                  aria-label="Follow @kerolloz on GitHub"
+                  >Follow @kerolloz</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="https://unpkg.com/github-api/dist/GitHub.bundle.min.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>

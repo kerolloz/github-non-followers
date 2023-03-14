@@ -14,38 +14,27 @@ async function getWithPagination(total_number, per_page, func) {
   return accumulator.flat();
 }
 
-async function getFollowers(username, total) {
-  const MAX_PER_PAGE = 100;
-  const followers = await getWithPagination(
-    total,
-    MAX_PER_PAGE,
-    async (page) => {
-      const res = await fetch(
-        `https://api.github.com/users/${username}/followers?page=${page}&per_page=${MAX_PER_PAGE}`
-      );
-      return await res.json();
-    }
-  );
-  return followers;
+function getFollowers(username, total) {
+  const per_page = 100;
+  return getWithPagination(total, per_page, async (page) => {
+    const res = await fetch(
+      `https://api.github.com/users/${username}/followers?page=${page}&per_page=${per_page}`
+    );
+    return await res.json();
+  });
 }
 
-async function getFollowing(username, total) {
-  const MAX_PER_PAGE = 100;
-  const following = await getWithPagination(
-    total,
-    MAX_PER_PAGE,
-    async (page) => {
-      const res = await fetch(
-        `https://api.github.com/users/${username}/following?page=${page}&per_page=${MAX_PER_PAGE}`
-      );
-      return await res.json();
-    }
-  );
-  return following;
+function getFollowing(username, total) {
+  const per_page = 100;
+  return getWithPagination(total, per_page, async (page) => {
+    const res = await fetch(
+      `https://api.github.com/users/${username}/following?page=${page}&per_page=${per_page}`
+    );
+    return await res.json();
+  });
 }
 
 async function findNonFollowers(username) {
-  // use promise.all
   const userData = await getUserData(username);
 
   const [followers, following] = await Promise.all([
